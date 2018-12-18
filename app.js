@@ -1,4 +1,7 @@
 var pollutionUrl = "http://airemad.com/api/v1/pollution/";
+var cameraUrl = "http://informo.munimadrid.es/cameras/";
+
+displayRandomCameraImage();
 
 var url = pollutionUrl + "S004";
 requestData(url)
@@ -42,4 +45,16 @@ function createChemicalCompoundMarkup(chemicalCompound, lastObservedValue) {
     `;
 
     return markup;
+}
+
+function displayRandomCameraImage(){
+    var cameraElement = document.getElementsByClassName("random-camera")[0];
+    var randomCameraIndex = getRandomInteger(0, camerasIds.length);
+    var url = cameraUrl + camerasIds[randomCameraIndex] + ".jpg?v=18944";
+    cameraElement.src = url;
+}
+
+function getRandomInteger(min, max) {
+    var random = (Math.random() * (max - min)) + min;
+    return Math.floor(random);
 }
