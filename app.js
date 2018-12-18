@@ -1,5 +1,7 @@
 var pollutionUrl = "http://airemad.com/api/v1/pollution/";
 var cameraUrl = "http://informo.munimadrid.es/cameras/";
+var weatherApiKey = "yourApiKey";
+var weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Madrid&units=metric&appid=";
 
 displayRandomCameraImage();
 
@@ -9,6 +11,8 @@ requestData(url)
     .catch(err => {
         console.log("An error occurred while fetching pollution data: ", err);
     });
+
+requestWeather();
 
 function replaceNullData(strings, ...parts) {
     var checkedMarkup = "";
@@ -57,4 +61,27 @@ function displayRandomCameraImage(){
 function getRandomInteger(min, max) {
     var random = (Math.random() * (max - min)) + min;
     return Math.floor(random);
+}
+
+function requestWeather(place, cb){
+    var url = weatherUrl + weatherApiKey;
+    requestData(url)
+        .then(displayCurrentWeahterData)
+        .catch(err => {
+            console.log("An error occurred while fetching weather data: ", err);
+        });
+}
+
+function displayCurrentWeahterData(data) {
+    var currentWatherDataElement = document.getElementsByClassName("current-weather-data")[0];
+
+    var currentWatherDataMarkup = replaceNullData`
+        <p>${data.weather[0].description}</p>
+        <p>${data.main.temp}ºC</p>
+        <p>Min ${data.main.temp_min}ºC | Max ${data.main.temp_max}ªC</p>
+        <p>Hum ${data.main.humidity}% | Pres ${data.main.pressure} psi</p>
+        <p>Viento ${data.wind.deg}ª | ${data.wind.speed} km/h</p>
+    `
+
+    currentWatherDataElement.innerHTML = currentWatherDataMarkup;
 }
