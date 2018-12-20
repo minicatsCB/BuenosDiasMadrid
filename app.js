@@ -92,10 +92,7 @@ function displayCurrentWeahterData(data) {
 function requestForecastWeather() {
     var url = forecastWeatherUrl + weatherApiKey;
     requestData(url)
-        .then(data => {
-            console.log(data);
-            displayForecastWeatherData(data);
-        })
+        .then(displayForecastWeatherData)
         .catch(err => {
             console.log("An error occurred while fetching forecast weather data: ", err);
         });
@@ -104,41 +101,23 @@ function requestForecastWeather() {
 function displayForecastWeatherData(data) {
     var forecastElement = document.getElementsByClassName("forecast")[0];
 
-    var forecastMarkup = replaceNullData`
-        <div class="col">
-            <div class="col-12">${getWeekDayName(data.list[0].dt)} (00:00)</div>
-            <div class="row">
-                <div class="col-6">First day forecast icon</div>
-                <div class="col-6">First day forecast data</div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="col-12">${getWeekDayName(data.list[8].dt)} (00:00)</div>
-            <div class="row">
-                <div class="col-6">First day forecast icon</div>
-                <div class="col-6">First day forecast data</div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="col-12">${getWeekDayName(data.list[16].dt)} (00:00)</div>
-            <div class="row">
-                <div class="col-6">First day forecast icon</div>
-                <div class="col-6">First day forecast data</div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="col-12">${getWeekDayName(data.list[24].dt)} (00:00)</div>
-            <div class="row">
-                <div class="col-6">First day forecast icon</div>
-                <div class="col-6">First day forecast data</div>
-            </div>
-        </div><div class="col">
-            <div class="col-12">${getWeekDayName(data.list[32].dt)} (00:00)</div>
-            <div class="row">
-                <div class="col-6">First day forecast icon</div>
-                <div class="col-6">First day forecast data</div>
-            </div>
-        </div>
+    var forecastData = [data.list[0], data.list[8], data.list[16], data.list[24]];
+
+    var forecastMarkup = replaceNullData `
+        ${forecastData.map((item, i) => `
+          <div class="col">
+              <div class="col-12">${getWeekDayName(item.dt)} (00:00)</div>
+              <div class="row">
+                  <div class="col-6">First day forecast icon</div>
+                  <div class="col-6">
+                      <p>${item.weather[0].description}</p>
+                      <p>${item.main.temp}ºC</p>
+                      <p>Min ${item.main.temp_min}ºC | Max ${item.main.temp_max}ªC</p>
+                      <p>Hum ${item.main.humidity}% | Pres ${item.main.pressure} psi</p>
+                  </div>
+              </div>
+          </div>
+        `).join('')}
     `;
 
     forecastElement.innerHTML = forecastMarkup;
