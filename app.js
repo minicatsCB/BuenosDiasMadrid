@@ -30,6 +30,7 @@ function replaceNullData(strings, ...parts) {
 }
 
 function displayPollutionData(data) {
+    console.log(data);
     var pollutionElement = document.getElementsByClassName("pollution")[0];
 
     for (var key in data) {
@@ -48,7 +49,10 @@ function displayPollutionData(data) {
 
 function createChemicalCompoundMarkup(chemicalCompound, lastObservedValue) {
     var markup = replaceNullData`
-        <p><b>${chemicalCompound.parameter} (${chemicalCompound.abrebiation}):</b> ${lastObservedValue.valor}&#181;g/m3 <em>medido por ${chemicalCompound.technique}</em></p>
+        <p class="text-secondary">
+            <span class="font-weight-bold text-dark">${chemicalCompound.parameter} (${chemicalCompound.abrebiation}):</span>
+            ${lastObservedValue.valor}&#181;g/m3 <em>medido por ${chemicalCompound.technique}</em>
+        </p>
     `;
 
     return markup;
@@ -81,14 +85,14 @@ function displayCurrentWeahterData(data) {
     var currentWatherDataMarkup = replaceNullData`
     <div class="row">
         <div class="col">
-            <i class="owf owf-${data.weather[0].id} owf-5x"></i>
+            <i class="owf owf-${data.weather[0].id} text-info"></i>
         </div>
         <div class="col">
-            <p>${data.weather[0].description}</p>
-            <p>${data.main.temp}ºC</p>
-            <p>Min ${data.main.temp_min}ºC | Max ${data.main.temp_max}ªC</p>
-            <p>Hum ${data.main.humidity}% | Pres ${data.main.pressure} psi</p>
-            <p>Viento ${data.wind.deg}ª | ${data.wind.speed} km/h</p>
+            <h5 class="my-0 text-capitalize font-weight-bold text-info">${data.weather[0].description}</h5>
+            <p class="my-0 text-secondary">${data.main.temp}ºC</p>
+            <p class="my-0 text-secondary">Min ${data.main.temp_min}ºC | Max ${data.main.temp_max}ªC</p>
+            <p class="my-0 text-secondary">Hum ${data.main.humidity}% | Pres ${data.main.pressure} psi</p>
+            <p class="my-0 text-secondary">Viento ${data.wind.deg}ª | ${data.wind.speed} km/h</p>
         </div>
     </div>
     `
@@ -113,16 +117,18 @@ function displayForecastWeatherData(data) {
     var forecastMarkup = replaceNullData `
         ${forecastData.map((item, i) => `
           <div class="col">
-              <div class="col-12">${getWeekDayName(item.dt)} (00:00)</div>
+              <div class="col-12 pl-0 text-capitalize font-weight-bold text-dark">
+                <p>${getWeekDayName(item.dt)} (00:00)</p>
+              </div>
               <div class="row">
                   <div class="col-6">
-                    <i class="owf owf-${item.weather[0].id} owf-5x"></i>
+                    <i class="owf owf-${item.weather[0].id} owf-5x owf-border text-dark"></i>
                   </div>
                   <div class="col-6">
-                      <p>${item.weather[0].description}</p>
-                      <p>${item.main.temp}ºC</p>
-                      <p>Min ${item.main.temp_min}ºC | Max ${item.main.temp_max}ªC</p>
-                      <p>Hum ${item.main.humidity}% | Pres ${item.main.pressure} psi</p>
+                      <p class="my-0 text-capitalize font-weight-bold text-dark">${item.weather[0].description}</p>
+                      <p class="my-0 text-secondary">${item.main.temp}ºC</p>
+                      <p class="my-0 text-secondary">Min ${item.main.temp_min}ºC | Max ${item.main.temp_max}ªC</p>
+                      <p class="my-0 text-secondary">Hum ${item.main.humidity}% | Pres ${item.main.pressure} psi</p>
                   </div>
               </div>
           </div>
