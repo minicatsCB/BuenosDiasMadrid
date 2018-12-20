@@ -18,14 +18,15 @@ requestForecastWeather();
 
 function replaceNullData(strings, ...parts) {
     var checkedMarkup = "";
-    strings.forEach((string, index) => {
-        if (!parts[index]){
-            parts[index] = "data no available";
+    parts.forEach((part, index) => {
+        if (part === null) {
+            part = "data not available";
         }
-        checkedMarkup += string + parts[index];
+
+        checkedMarkup += strings[index] + part;
     });
 
-    return checkedMarkup;
+    return checkedMarkup + strings[strings.length - 1];
 }
 
 function displayPollutionData(data) {
