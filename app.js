@@ -30,7 +30,7 @@ function replaceNullData(strings, ...parts) {
 }
 
 function displayPollutionData(data) {
-    var pollutionElement = document.getElementsByClassName("pollution-data")[0];
+    var pollutionElement = document.getElementsByClassName("pollution")[0];
 
     for (var key in data) {
     	if (data.hasOwnProperty(key)) {
@@ -76,14 +76,21 @@ function requestCurrentWeather(place, cb){
 }
 
 function displayCurrentWeahterData(data) {
-    var currentWatherDataElement = document.getElementsByClassName("current-weather-data")[0];
+    var currentWatherDataElement = document.getElementsByClassName("current-weather")[0];
 
     var currentWatherDataMarkup = replaceNullData`
-        <p>${data.weather[0].description}</p>
-        <p>${data.main.temp}ºC</p>
-        <p>Min ${data.main.temp_min}ºC | Max ${data.main.temp_max}ªC</p>
-        <p>Hum ${data.main.humidity}% | Pres ${data.main.pressure} psi</p>
-        <p>Viento ${data.wind.deg}ª | ${data.wind.speed} km/h</p>
+    <div class="row">
+        <div class="col">
+            <i class="owf owf-${data.weather[0].id} owf-5x"></i>
+        </div>
+        <div class="col">
+            <p>${data.weather[0].description}</p>
+            <p>${data.main.temp}ºC</p>
+            <p>Min ${data.main.temp_min}ºC | Max ${data.main.temp_max}ªC</p>
+            <p>Hum ${data.main.humidity}% | Pres ${data.main.pressure} psi</p>
+            <p>Viento ${data.wind.deg}ª | ${data.wind.speed} km/h</p>
+        </div>
+    </div>
     `
 
     currentWatherDataElement.innerHTML = currentWatherDataMarkup;
@@ -108,7 +115,9 @@ function displayForecastWeatherData(data) {
           <div class="col">
               <div class="col-12">${getWeekDayName(item.dt)} (00:00)</div>
               <div class="row">
-                  <div class="col-6">First day forecast icon</div>
+                  <div class="col-6">
+                    <i class="owf owf-${item.weather[0].id} owf-5x"></i>
+                  </div>
                   <div class="col-6">
                       <p>${item.weather[0].description}</p>
                       <p>${item.main.temp}ºC</p>
