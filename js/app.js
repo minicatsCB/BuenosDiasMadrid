@@ -10,7 +10,7 @@ var url = pollutionUrl + "S004";
 requestData(url)
     .then(displayPollutionData)
     .catch(err => {
-        console.log("An error occurred while fetching pollution data: ", err);
+        console.error("An error occurred while fetching pollution data: ", err);
     });
 
 requestCurrentWeather();
@@ -74,7 +74,7 @@ function requestCurrentWeather(place, cb){
     requestData(url)
         .then(displayCurrentWeahterData)
         .catch(err => {
-            console.log("An error occurred while fetching current weather data: ", err);
+            console.eror("An error occurred while fetching current weather data: ", err);
         });
 }
 
@@ -104,7 +104,7 @@ function requestForecastWeather() {
     requestData(url)
         .then(displayForecastWeatherData)
         .catch(err => {
-            console.log("An error occurred while fetching forecast weather data: ", err);
+            console.error("An error occurred while fetching forecast weather data: ", err);
         });
 }
 
