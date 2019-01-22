@@ -30,7 +30,6 @@ function replaceNullData(strings, ...parts) {
 }
 
 function displayPollutionData(data) {
-    console.log(data);
     var pollutionElement = document.getElementsByClassName("pollution")[0];
 
     for (var key in data) {
