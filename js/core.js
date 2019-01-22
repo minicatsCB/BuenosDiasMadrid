@@ -1,22 +1,11 @@
 function requestData(url) {
-    return new Promise((resolve, reject) => {
-        fetch(url)
-           .then(getStatus)
-           .then(getJson)
-           .then(resolve)
-           .catch(reject);
+    return fetch(url).then(response => {
+        if(response.ok) {
+            return response.json().then(data => {
+                return Promise.resolve(data);
+            });
+        } else {
+            return Promise.reject(response.status);
+        }
     });
-}
-
-function getStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-        return Promise.resolve(response);
-    }
-    else {
-        return Promise.reject(new Error(response.statusText));
-    }
-}
-
-function getJson(response) {
-    return response.json();
 }
