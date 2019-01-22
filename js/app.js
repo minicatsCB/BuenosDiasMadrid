@@ -5,14 +5,7 @@ var currentWeatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Madrid
 var forecastWeatherUrl = "http://api.openweathermap.org/data/2.5/forecast?q=Madrid&units=metric&&appid=";
 
 displayRandomCameraImage();
-
-var url = pollutionUrl + "S004";
-requestData(url)
-    .then(displayPollutionData)
-    .catch(err => {
-        console.error("An error occurred while fetching pollution data: ", err);
-    });
-
+requestPollutionData();
 requestCurrentWeather();
 requestForecastWeather();
 
@@ -27,6 +20,15 @@ function replaceNullData(strings, ...parts) {
     });
 
     return checkedMarkup + strings[strings.length - 1];
+}
+
+function requestPollutionData(){
+    var url = pollutionUrl + "S004";
+    requestData(url)
+        .then(displayPollutionData)
+        .catch(err => {
+            console.error("An error occurred while fetching pollution data: ", err);
+        });
 }
 
 function displayPollutionData(data) {
