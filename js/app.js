@@ -1,8 +1,3 @@
-displayRandomCameraImage();
-requestPollutionData();
-requestCurrentWeather();
-requestForecastWeather();
-
 function replaceNullData(strings, ...parts) {
     var checkedMarkup = "";
     parts.forEach((part, index) => {
@@ -141,3 +136,8 @@ function getWeekDayName(timestamp) {
 
     return date.toLocaleString("es-ES", options);
 }
+
+displayRandomCameraImage();
+requestPollutionData();
+requestCurrentWeather();
+requestForecastWeather();
